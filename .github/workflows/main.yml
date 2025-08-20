@@ -1,0 +1,21 @@
+name: Build without Tests
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Build project (no tests)
+      run: |
+        echo "Building project but skipping tests"
+        # Add your build commands here, e.g.
+        # mvn clean compile
+        # npm install && npm run build
