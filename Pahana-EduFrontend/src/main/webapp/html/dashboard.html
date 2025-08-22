@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <link rel="stylesheet" href=".../css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Top Dark Red Bar -->
+    <div class="wrapper"> 
+    <div class="top-bar">
+        <a href="help.html">HELP</a>
+        <span>|</span>
+        <a href="login.html" class="exit-btn">LOG OUT</a>
+    </div>
+    </div>
+        
+
+    <!-- Header with Cart -->
+    <div class="header-bar">
+        <div class="header-content">
+            <div class="logo">
+                <img src=".../images/logo.jpeg" alt="Logo">
+            </div>
+            
+           <h1 class="main-heading">Welcome Cashier!</h1>
+            
+        <a href=".../html/cart.html">
+            <div class="cart-icon">
+            <i class="fas fa-shopping-cart"></i>
+            </div>
+        </a>
+        </div>
+    </div>
+    
+   
+   <!-- Hero Section -->
+<section class="hero-carousel">
+    <div class="carousel-slide fade" style="background-image: url('../images/signup.jpg');"></div>
+    <div class="carousel-slide fade" style="background-image: url('../images/login2.jpg');"></div>
+    <div class="carousel-slide fade" style="background-image: url('../images/book4.jpg');"></div>
+
+    <div class="hero-buttons">
+        <button onclick="location.href='cusregistration.html'" class="hero-btn">Add Customer</button>
+        <button onclick="location.href='customer.html'" class="hero-btn">View Customer Records</button>
+        <button onclick="location.href='browseitems.html'" class="hero-btn">Create Bill</button>
+        <button onclick="location.href='Bills.html'" class="hero-btn">View Bills</button>
+    </div>
+</section>
+     
+    <!-- Info Cards Section -->
+<section class="info-section">
+  <div class="info-card promo">
+    <i class="fas fa-bullhorn"></i>
+    <div class="info-text">
+      <h3>Daily Promotion:</h3>
+      <p>Get 10% off on orders above Rs. 20,000</p>
+    </div>
+  </div>
+
+    
+  <div class="info-card alert">
+    <i class="fas fa-exclamation-triangle"></i>
+    <div class="info-text">
+      <h3>Low Stock Alerts:</h3>
+      <p>No Stock to Show</p>
+    </div>
+  </div>
+</section>
+   
+   
+   <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 Pahana Education. All rights reserved.</p>
+    </footer>
+<!-- near the end of body (before other scripts) -->
+<script src="../js/auth-guard.js"></script>
+<script>
+  // Only allow cashier
+  requireRole(["cashier"]);
+  // Optional: personalize header
+  const u = getAuthUser();
+  if (u?.fullname) {
+    const h1 = document.querySelector(".main-heading");
+    if (h1) h1.textContent = `Welcome ${u.fullname}!`;
+  }
+</script>
+
+<script src="../js/dashboard.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,370 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.top-bar {
+    height: 45px;
+    background-color: rgb(195, 23, 23);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.top-bar a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 0 10px;
+    font-size: 13px;
+}
+
+.header-bar {
+    background-color: white;
+    padding: 0 20px;
+    height: 85px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo img {
+    height: 45px;
+    padding-left: 25px;
+}
+
+.search-box {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-box input {
+    width: 60%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 25px 0 0 25px;
+    outline: none;
+}
+
+.search-box button {
+    padding: 10px 15px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 0 25px 25px 0;
+    cursor: pointer;
+}
+
+.cart-icon {
+    font-size: 20px;
+    color: #333;
+    padding-left: 5px;
+    padding-right: 95px;
+}
+
+.navbar {
+    background-color: rgba(50, 50, 50, 0.72);
+    position: absolute;
+    top: 130px; 
+    width: 100%;
+    z-index: 100;
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.navbar li {
+    position: relative;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    font-weight: 700;
+}
+
+.navbar .dropdown > a::after {
+    content: " \f107";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-left: 5px;
+}
+
+.navbar a:hover,
+.navbar li:hover > a {
+    background-color: white;
+    color: black;
+    transition: 0.3s;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    min-width: 150px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+    z-index: 1000;
+    padding: 0;
+}
+
+.dropdown-menu li a {
+    color: black;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+    background-color: white;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+}
+/* Hero Section */
+.hero-section {
+    position: relative;
+    height: 280px;
+    background-image: url('../images/edubooks.jpg');
+    background-color: rgba(0, 0, 0, 0.2);
+    background-blend-mode: darken;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 1;
+}
+
+
+/* Fiction Section Layout */
+.fiction-section {
+  display: flex;
+  padding: 40px;
+  gap: 40px;
+  background-color: #f9f9f9f7;
+  flex-wrap: wrap;
+  min-height: 650px;
+}
+
+/* Sidebar */
+.filter-sidebar {
+  flex: 0.5;
+  min-width: 250px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  height: 580px; /* You can adjust this height as needed */
+  
+}
+
+.filter-title {
+  font-size: 22px;
+  margin-bottom: 2px;
+  color: #b91c1c;
+}
+
+.filter-sub {
+  font-size: 18px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.filter-section-header {
+  background-color: #b91c1c; 
+  color: white;
+  padding: 8px 12px;
+  font-weight: bold;
+  font-size: 15px;
+  border-radius: 0px;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  
+}
+
+.filter-input {
+  width: 90%;
+  padding: 8px;
+  font-size: 13px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin: 0 auto 10px auto;
+  display: block;
+}
+
+
+.price-range {
+  width: 100%;
+}
+
+.price-label {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #333;
+}
+
+.reset-button {
+  margin-top: 5px;
+  padding: 10px 2px;
+  border: none;
+  background-color: #b91c1c;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 110px;
+}
+
+.reset-button:hover {
+  background-color: #a11b1b;
+}
+
+/* Book Cards */
+.books-container {
+  flex: 3;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 34px;
+  align-items: start; 
+}
+
+.book-card {
+  background-color: white;
+  padding: 19px 15px 15px 15px; 
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease-in-out;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-height: 420px; 
+  overflow: hidden; 
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+}
+
+.book-card img {
+  width: 100%;
+  max-height: 160px; 
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 10px;
+}
+
+.book-card h3 {
+  font-size: 14px; 
+  margin: 8px 0 4px;
+}
+
+.book-card p {
+  font-size: 13px; 
+  margin: 4px 0;
+  color: #555;
+}
+
+.book-card button {
+  margin: 5px auto;             
+  width: 120px;                 
+  height: 35px;                 
+  font-size: 14px;
+  border: none;
+  border-radius: 0px;
+  cursor: pointer;
+  display: block;               
+}
+
+.add-to-cart {
+  background-color: rgb(195, 23, 23);   
+  color: white;
+}
+
+.add-to-cart:hover {
+  background-color: darkred;  
+}
+
+
+/* Copyright Footer */
+.footer {
+    background-color: rgb(195, 23, 23);
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    margin-top: auto;
+}
+
+.footer p {
+    color: white;
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Quantity */
+.quantity-selector {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-top: 10px;
+}
+
+.qty-btn {
+  width: 30px !important;
+  height: 30px;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  border: none;
+  background-color: #eee;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 0;
+  box-sizing: border-box;
+  line-height: 1;
+}
+.qty-input {
+  width: 35px;
+  height: 30px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}

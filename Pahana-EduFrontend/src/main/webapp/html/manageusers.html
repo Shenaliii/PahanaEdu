@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Manage Users</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<style>
+body { font-family:'Segoe UI', sans-serif; margin:0; background:#f9f9f9; color:#333; }
+.top-bar { background:#b5001a; color:#fff; padding:8px 20px; display:flex; justify-content:flex-end; gap:10px; }
+.top-bar a { color:#fff; text-decoration:none; font-weight:bold; }
+.hero-section { background:#fff0f0; text-align:center; padding:30px 20px; border-bottom:1px solid #ddd; }
+.hero-section h1 { margin:0; color:#b5001a; }
+.page-wrap { max-width:1200px; margin:20px auto; }
+.add-item-box { background:#fff; padding:20px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); margin-bottom:20px; }
+.add-item-box input, .add-item-box select { width:100%; padding:8px; margin:5px 0; border:1px solid #ccc; border-radius:4px; }
+.button-group { display:flex; gap:10px; margin-top:10px; }
+.add-btn, .clear-btn { padding:8px 12px; border:none; border-radius:5px; cursor:pointer; }
+.add-btn { background:#b5001a; color:#fff; }
+.clear-btn { background:#ccc; color:#000; }
+table { width:100%; border-collapse:collapse; margin-top:20px; }
+th, td { border:1px solid #ddd; padding:8px; text-align:center; }
+th { background:#f5f5f5; color:#b5001a; }
+td input, td select { width:100%; padding:4px; border:none; background:transparent; }
+.edit-icon, .save-icon, .delete-icon { cursor:pointer; margin:0 3px; color:#b5001a; }
+.save-icon { display:none; color:#087443; }
+footer { text-align:center; padding:15px 0; margin-top:20px; background:#f5f5f5; font-size:14px; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="help.html">HELP</a><span>|</span><a href="login.html">LOG OUT</a>
+</div>
+
+<div class="page-wrap">
+  <section class="hero-section"><h1>Manage Users</h1></section>
+
+  <section class="add-item-section">
+    <div class="add-item-box">
+      <h2>Add User</h2>
+      <form id="registerForm">
+        <input type="text" id="username" placeholder="Username" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <select id="role" required>
+          <option value="">Select Role</option>
+          <option>Cashier</option>
+          <option>Admin</option>
+        </select>
+        <div class="button-group">
+          <button class="clear-btn" type="reset">Clear</button>
+          <button class="add-btn" type="submit">Add</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="items-record-section">
+    <h2>Current Users</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Password</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="userTableBody"></tbody>
+    </table>
+  </section>
+</div>
+
+<footer>© 2025 Pahana Education. All rights reserved.</footer>
+
+<script>
+const API_BASE = "http://localhost:8080/pahanaedu-service/users";
+const tableBody = document.getElementById("userTableBody");
+
+// Load users
+async function loadUsers() {
+  try {
+    const resp = await fetch(API_BASE);
+    const usersData = await resp.json();
+    renderUsers(usersData);
+  } catch(e){ console.error(e); alert("Failed to load users."); }
+}
+
+// Render table
+function renderUsers(data) {
+  tableBody.innerHTML = "";
+  data.forEach(u=>{
+    const tr = document.createElement("tr");
+    tr.dataset.username = u.username;
+    tr.innerHTML = `
+      <td><input type="text" value="${u.username}" disabled></td>
+      <td><input type="password" value="${u.password}" disabled></td>
+      <td>
+        <select disabled>
+          <option ${u.role==="Cashier"?"selected":""}>Cashier</option>
+          <option ${u.role==="Admin"?"selected":""}>Admin</option>
+        </select>
+      </td>
+      <td>
+        <i class="fas fa-pen edit-icon"></i>
+        <i class="fas fa-check-circle save-icon"></i>
+        <i class="fas fa-trash delete-icon"></i>
+      </td>
+    `;
+    attachRowHandlers(tr);
+    tableBody.appendChild(tr);
+  });
+}
+
+// Row actions
+function attachRowHandlers(tr){
+  const editIcon = tr.querySelector(".edit-icon");
+  const saveIcon = tr.querySelector(".save-icon");
+  const deleteIcon = tr.querySelector(".delete-icon");
+  const inputs = tr.querySelectorAll("input, select");
+
+  editIcon.addEventListener("click", ()=>{
+    inputs.forEach(inp=>inp.disabled=false);
+    editIcon.style.display="none";
+    saveIcon.style.display="inline";
+  });
+
+  saveIcon.addEventListener("click", async ()=>{
+    const username = tr.dataset.username;
+    const payload = { password: inputs[1].value, role: inputs[2].value };
+    try{
+      const resp = await fetch(`${API_BASE}/${username}`, {
+        method:"PUT",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify(payload)
+      });
+      if(!resp.ok) throw new Error("Update failed");
+      inputs.forEach(inp=>inp.disabled=true);
+      editIcon.style.display="inline";
+      saveIcon.style.display="none";
+      alert("User updated!");
+    }catch(e){ alert(e.message); }
+  });
+
+  deleteIcon.addEventListener("click", async ()=>{
+    if(!confirm("Delete this user?")) return;
+    const username = tr.dataset.username;
+    try{
+      const resp = await fetch(`${API_BASE}/${username}`, { method:"DELETE" });
+      if(!resp.ok) throw new Error("Delete failed");
+      tr.remove();
+    }catch(e){ alert(e.message); }
+  });
+}
+
+// Add user form
+document.getElementById("registerForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+  const payload = {
+    username: document.getElementById("username").value,
+    password: document.getElementById("password").value,
+    role: document.getElementById("role").value
+  };
+  try{
+    const resp = await fetch(API_BASE, {
+      method:"POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(payload)
+    });
+    if(!resp.ok) throw new Error("Add failed");
+    const newUser = await resp.json();
+    loadUsers();
+    e.target.reset();
+    alert("User added!");
+  }catch(e){ alert(e.message); }
+});
+
+document.addEventListener("DOMContentLoaded", loadUsers);
+</script>
+</body>
+</html>
