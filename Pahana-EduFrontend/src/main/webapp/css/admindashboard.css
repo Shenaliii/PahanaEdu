@@ -1,0 +1,103 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.top-bar {
+    height: 45px;
+    background-color: rgb(195, 23, 23);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.top-bar a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 0 10px;
+    font-size: 13px;
+}
+
+.top-bar span {
+    color: white;
+}
+
+/* Hero Section */
+.hero-section {
+    position: relative;
+    height: 180px;
+    background-image: url('../images/admin.jpeg');
+    background-color: rgba(0, 0, 0, 0.2);
+    background-blend-mode: darken;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 1;
+}
+
+/* Admin Options Section */
+.admin-options-section {
+  background-color: #f5f5f5;
+  height: 467px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-box-container {
+  background-color: #ffe5e5; /* Light red background */
+  padding: 40px 60px;
+  border-radius: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 30px; 
+  height: 100%;
+  max-height: 280px;
+  width: 300px;
+}
+
+.admin-option {
+  background-color: rgb(195, 23, 23);
+  color: white;
+  padding: 12px 20px;
+  margin: 2px 0px;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.admin-option:hover {
+  background-color: #a51010;
+}
+
+.admin-option {
+  text-decoration: none; 
+  color: white;
+}
+
+/* Copyright Footer */
+.footer {
+    background-color: rgb(195, 23, 23);
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    margin-top: auto;
+}
+
+.footer p {
+    color: white;
+    margin: 0;
+    font-size: 14px;
+}
